@@ -16,18 +16,19 @@
 </head>
 <body>
 <div id="flex-box"></div>
-
 <script>
     let a = '000000000000 ';
     let b = '111111111111 ';
+    let c = '110000000000 ';
+    let d = '110001100011 ';
 
     let I = `${a}${a}${a}${b}${b}${a}${a}${a}`;
-    let L = `${b}${b}110000000000 110000000000 110000000000 110000000000 110000000000 110000000000 `;
+    let L = `${b}${b}${c}${c}${c}${c}${c}${c}`;
     let O = `000111111000 011111111110 111000000111 110000000011 110000000011 111000000111 011111111110 000111111000 `;
     let V = `000000011111 000111111111 011111100000 111000000000 111000000000 011111100000 000111111111 000000011111 `;
-    let E = `${b}${b}110001100011 110001100011 110001100011 110001100011 110001100011 110001100011 `;
+    let E = `${b}${b}${d}${d}${d}${d}${d}${d}`;
     let Y = `000000000111 000000011111 000001111000 111111100000 111111100000 000001111000 000000011111 000000000111 `;
-    let U = `000111111111 011111111111 111000000000 110000000000 110000000000 111000000000 011111111111 000111111111 `;
+    let U = `000111111111 011111111111 111000000000 ${c}${c}111000000000 011111111111 000111111111 `;
     let EM = `${a}${a}${a}110011111111 110011111111 ${a}${a}${a}`;
 
 
@@ -99,33 +100,24 @@
     const build = (flex, fullNum, strLength) => {
         flex.style = `height: ${12*100/strLength}vh;`;
         for(let i=0; i<fullNum.length;i++) {
-            flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
-            
             setTimeout(function() {
-                document.getElementById('div'+i).style = `
-                    width: ${100/strLength}vw;
-                    height: ${100/strLength}vh;
-                    border: 1px solid white;
-                `;
+                flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
                 if (fullNum[i] === '1') {     
-                    document.getElementById('div'+i).style = `
-                        width: ${100/strLength}vw;
-                        height: ${100/strLength}vh;
-                        border: 1px solid white;
-                        background: red;
-                    `;
+                    document.getElementById('div'+i).style.backgroundColor = 'red';
                 }
-                document.getElementById('div'+i).style.animation = 'pixel 1s ease-in-out forwards';
+                document.getElementById('div'+i).style.width = `${100/strLength}vw`;
+                document.getElementById('div'+i).style.height = `${100/strLength}vh`;
+                document.getElementById('div'+i).style.border = '1px solid white';
+                document.getElementById('div'+i).style.animation = 'pixel 0.2s ease-in-out forwards';
 
             }, 10*i);
         }
-
     }
     
     const funcBuild = (str) => {
-        let flex = document.getElementById('flex-box');        
+        const flex = document.getElementById('flex-box');        
         const fullNum = funcWrite(fullStr(str));
-        let strLength = fullStr(str).length-1;
+        const strLength = fullStr(str).length-1;
         build(flex, fullNum, strLength);
     }
 
@@ -159,6 +151,6 @@
         }
     }
 </style>
-
+    
 </body>
 </html>
