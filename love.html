@@ -16,6 +16,7 @@
 </head>
 <body>
 <div id="flex-box"></div>
+
 <script>
     let a = '000000000000 ';
     let b = '111111111111 ';
@@ -33,9 +34,49 @@
 
     let str = 'I love you !';
 
+    let img = `00000000000000111111111100000000000000
+     00000000000111111111111111100000000000 
+     00000000011111111111111111111000000000
+     00000000111111111111111111111100000000
+     00000011111111111111111111111111000000
+     00000111111111111111111111111111100000
+     00000111111111111111111111111111100000
+     00001111111001111111111111111111110000
+     00011111110011111111111111111111111000
+     00111111100111111111111111111111111100
+     00111111001111111111111111111111111100
+     01111110011111111110000011111111111110
+     01111100011111111100000000111111111110
+     01111100111111111000000000011111111110
+     01111100111111111000000000011111111110
+     11111000111111111100000000111111111111
+     11111001111111111111100111111111111111
+     11111001111111111111111111111111111111
+     11111001111111111111111111111111111111
+     11111001111111111111111111111111111111
+     11111001111111111111111111111111111111
+     11111001111111111111100111111111111111
+     11111000111111111100000000111111111111
+     01111100111111111000000000011111111110
+     01111100111111111000000000011111111110
+     01111100011111111100000000111111111110
+     01111110011111111110000011111111111110
+     00111111001111111111111111111111111100
+     00111111100111111111111111111111111100
+     00011111110011111111111111111111111000
+     00001111111001111111111111111111110000
+     00000111111111111111111111111111100000
+     00000111111111111111111111111111100000
+     00000011111111111111111111111111000000
+     00000000111111111111111111111100000000
+     00000000011111111111111111111000000000
+     00000000000111111111111111100000000000
+     00000000000000111111111100000000000000`;
+
     const fullStr = (str) => {
         let arr = str.toUpperCase().split('');
         let newStr = '';
+        console.log(arr);
         for (let i = 0; i < arr.length; i++) {
             switch (arr[i]) {
                 case 'I':
@@ -90,30 +131,37 @@
         }
         return newStr;
     }
+    const fullImg = (img) => {
+        return img.split('     ');
+    }
 
     const funcBuild = (str) => {
-        const pixel = fullStr(str);
+        // const pixel = fullStr(str);
+        const pixel = fullImg(str);
         const flex = document.getElementById('flex-box');
         const fullNum = funcWrite(pixel);
-        const pixeLength = pixel.length-1;
-        flex.style = `height: ${12*100/pixeLength}vw;`;
+        // const pixeLength = pixel.length-1;
+        const pixeLength = pixel.length;
+        flex.style = `height: ${pixel[0].length*100/pixeLength}vw;`;
 
         for (let i = 0; i < fullNum.length; i++) {
             setTimeout(function () {
                 flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
                 let elementIdStyle = document.getElementById('div' + i);
-                elementIdStyle.style.animation = `pixel 5s ease-in-out forwards`;
+                elementIdStyle.style.animation = `pixel2 0.2s ease-in-out forwards`;
                 elementIdStyle.style.width = `${100 / pixeLength}vw`;
                 elementIdStyle.style.height = `${100 / pixeLength}vw`;
                 if (fullNum[i] === '1') {
                     elementIdStyle.style.backgroundColor = 'red';
-                    elementIdStyle.style.animation = `pixel2 5s ease-in-out forwards`;
+                    // elementIdStyle.style.animation = `pixel2 5s ease-in-out forwards`;
                 }
             }, 10 * i);
         }
     }
+
     setTimeout(function() {
-        funcBuild(str);
+        // funcBuild(str);
+        funcBuild(img);
     }, 1000);
 </script>
 
@@ -176,7 +224,7 @@
         100% {
             border: 0px solid blue;
             transform: scale(1);
-            background: red;
+            /* background: red; */
         }
     }
 </style>
