@@ -15,7 +15,8 @@
     </head>
 </head>
 <body>
-<div id="flex-box"></div>
+<div class="flex-box"></div>
+<div class="flex-box"></div>
 
 <script>
     let a = '000000000000 ';
@@ -76,7 +77,6 @@
     const fullStr = (str) => {
         let arr = str.toUpperCase().split('');
         let newStr = '';
-        console.log(arr);
         for (let i = 0; i < arr.length; i++) {
             switch (arr[i]) {
                 case 'I':
@@ -135,33 +135,54 @@
         return img.split('     ');
     }
 
-    const funcBuild = (str) => {
-        // const pixel = fullStr(str);
-        const pixel = fullImg(str);
-        const flex = document.getElementById('flex-box');
+    const funcBuildStr = (str) => {
+        const pixel = fullStr(str);
+        const flex = document.querySelectorAll('.flex-box')[0];
         const fullNum = funcWrite(pixel);
-        // const pixeLength = pixel.length-1;
+        const pixeLength = pixel.length-1;
+        flex.style = `height: ${pixel[0].length*100/pixeLength}vw;`;
+
+        for (let i = 0; i < fullNum.length; i++) {
+            setTimeout(function () {
+                flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
+                let elementIdStyle = flex.querySelector('#div' + i);
+                elementIdStyle.style.animation = `pixel 5s ease-in-out forwards`;
+                elementIdStyle.style.width = `${100 / pixeLength}vw`;
+                elementIdStyle.style.height = `${100 / pixeLength}vw`;
+                if (fullNum[i] === '1') {
+                    elementIdStyle.style.backgroundColor = 'red';
+                    elementIdStyle.style.animation = `pixel2 5s ease-in-out forwards`;
+                }
+            }, 10 * i);
+        }
+        setTimeout(function() {
+            funcBuildImg(img);
+        }, pixeLength*150);
+    }
+    const funcBuildImg = (img) => {
+        const pixel = fullImg(img);
+        const flex = document.querySelectorAll('.flex-box')[1];
+        const fullNum = funcWrite(pixel);
         const pixeLength = pixel.length;
         flex.style = `height: ${pixel[0].length*100/pixeLength}vw;`;
 
         for (let i = 0; i < fullNum.length; i++) {
             setTimeout(function () {
                 flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
-                let elementIdStyle = document.getElementById('div' + i);
-                elementIdStyle.style.animation = `pixel2 0.2s ease-in-out forwards`;
+                let elementIdStyle = flex.querySelector('#div' + i);
+                elementIdStyle.style.animation = `pixel3 0.2s ease-in-out forwards`;
                 elementIdStyle.style.width = `${100 / pixeLength}vw`;
                 elementIdStyle.style.height = `${100 / pixeLength}vw`;
                 if (fullNum[i] === '1') {
                     elementIdStyle.style.backgroundColor = 'red';
-                    // elementIdStyle.style.animation = `pixel2 5s ease-in-out forwards`;
                 }
             }, 10 * i);
         }
     }
 
     setTimeout(function() {
-        // funcBuild(str);
-        funcBuild(img);
+        funcBuildStr(str);
+        
     }, 1000);
 </script>
 
@@ -170,18 +191,21 @@
         margin: 0;
         background: #0a1428;
         display: flex;
-        align-items: center;
         height: 100vh;
         overflow: hidden;
+        flex-direction: column;
+        padding: 10vh 0;
+        align-items: flex-start;
     }
 
-    #flex-box {
+    .flex-box {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column-reverse;
+        margin: 1vh 0;
     }
 
-    #flex-box div {
+    .flex-box div {
         box-sizing: border-box;
         border-radius: 50%;   
     }
@@ -224,7 +248,26 @@
         100% {
             border: 0px solid blue;
             transform: scale(1);
-            /* background: red; */
+            background: red;
+        }
+    }
+    @keyframes pixel3 {
+        0% {
+            border: 1px solid green;
+            transform: scale(1);
+        }
+        25% {
+            transform: scale(0.5);
+        }
+        50% {
+            transform: scale(2);
+        }
+        75% {
+            transform: scale(0.5);
+        }
+        100% {
+            border: 0px solid blue;
+            transform: scale(1);
         }
     }
 </style>
