@@ -31,8 +31,7 @@
     let U = `000111111111 011111111111 111000000000 ${c}${c}111000000000 011111111111 000111111111 `;
     let EM = `${a}${a}${a}110011111111 110011111111 ${a}${a}${a}`;
 
-
-    let str = 'I Love You !';
+    let str = 'I love you !';
 
     const fullStr = (str) => {
         let arr = str.toUpperCase().split('');
@@ -92,34 +91,27 @@
         return newStr;
     }
 
-    const build = (flex) => {
+    const funcBuild = (str) => {
         const pixel = fullStr(str);
+        const flex = document.getElementById('flex-box');
         const fullNum = funcWrite(pixel);
         const pixeLength = pixel.length-1;
-        
-        flex.style = `height: ${12*100/pixeLength}vh;`;
+        flex.style = `height: ${12*100/pixeLength}vw;`;
 
         for (let i = 0; i < fullNum.length; i++) {
             setTimeout(function () {
                 flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
                 let elementIdStyle = document.getElementById('div' + i);
-
+                elementIdStyle.style.animation = `pixel 5s ease-in-out forwards`;
+                elementIdStyle.style.width = `${100 / pixeLength}vw`;
+                elementIdStyle.style.height = `${100 / pixeLength}vw`;
                 if (fullNum[i] === '1') {
                     elementIdStyle.style.backgroundColor = 'red';
+                    elementIdStyle.style.animation = `pixel2 5s ease-in-out forwards`;
                 }
-                elementIdStyle.style.width = `${100 / pixeLength}vw`;
-                elementIdStyle.style.height = `${100 / pixeLength}vh`;
-                elementIdStyle.style.animation = 'pixel 0.2s ease-in-out forwards';
-
             }, 10 * i);
         }
     }
-
-    const funcBuild = (str) => {
-        const flex = document.getElementById('flex-box');
-        build(flex);
-    }
-
     setTimeout(function() {
         funcBuild(str);
     }, 1000);
@@ -132,6 +124,7 @@
         display: flex;
         align-items: center;
         height: 100vh;
+        overflow: hidden;
     }
 
     #flex-box {
@@ -142,28 +135,48 @@
 
     #flex-box div {
         box-sizing: border-box;
+        border-radius: 50%;   
     }
 
     @keyframes pixel {
         0% {
-            border: 1px solid wheat;
-            transform: scale(1);
+            border: 1px solid white;
+            transform: scale(2);
+            background: red;
         }
         25% {
-            transform: scale(0.5);
-            border: 1px solid yellowgreen;
+            transform: scale(1.5);
         }
         50% {
             transform: scale(2);
-            border: 1px solid rosybrown;
         }
         75% {
             transform: scale(0.5);
-            border: 1px solid white;
         }
         100% {
             border: 0px solid transparent;
             transform: scale(1);
+            background: none;
+        }
+    }
+    @keyframes pixel2 {
+        0% {
+            border: 1px solid green;
+            transform: scale(1);
+        }
+        25% {
+            transform: scale(0.5);
+        }
+        50% {
+            transform: scale(2);
+        }
+        75% {
+            transform: scale(0.5);
+        }
+        100% {
+            border: 0px solid blue;
+            transform: scale(1);
+            background: red;
         }
     }
 </style>
