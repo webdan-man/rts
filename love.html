@@ -15,15 +15,12 @@
     </head>
 </head>
 <body>
-<div class="flex-box"></div>
-<div class="flex-box"></div>
-
+<div id="flex-box"></div>
 <script>
     let a = '000000000000 ';
     let b = '111111111111 ';
     let c = '110000000000 ';
     let d = '110001100011 ';
-
     let I = `${a}${a}${a}${b}${b}${a}${a}${a}`;
     let L = `${b}${b}${c}${c}${c}${c}${c}${c}`;
     let O = `000111111000 011111111110 111000000111 110000000011 110000000011 111000000111 011111111110 000111111000 `;
@@ -32,48 +29,7 @@
     let Y = `000000000111 000000011111 000001111000 111111100000 111111100000 000001111000 000000011111 000000000111 `;
     let U = `000111111111 011111111111 111000000000 ${c}${c}111000000000 011111111111 000111111111 `;
     let EM = `${a}${a}${a}110011111111 110011111111 ${a}${a}${a}`;
-
     let str = 'I love you !';
-
-    let img = `00000000000000111111111100000000000000
-     00000000000111111111111111100000000000 
-     00000000011111111111111111111000000000
-     00000000111111111111111111111100000000
-     00000011111111111111111111111111000000
-     00000111111111111111111111111111100000
-     00000111111111111111111111111111100000
-     00001111111001111111111111111111110000
-     00011111110011111111111111111111111000
-     00111111100111111111111111111111111100
-     00111111001111111111111111111111111100
-     01111110011111111110000011111111111110
-     01111100011111111100000000111111111110
-     01111100111111111000000000011111111110
-     01111100111111111000000000011111111110
-     11111000111111111100000000111111111111
-     11111001111111111111100111111111111111
-     11111001111111111111111111111111111111
-     11111001111111111111111111111111111111
-     11111001111111111111111111111111111111
-     11111001111111111111111111111111111111
-     11111001111111111111100111111111111111
-     11111000111111111100000000111111111111
-     01111100111111111000000000011111111110
-     01111100111111111000000000011111111110
-     01111100011111111100000000111111111110
-     01111110011111111110000011111111111110
-     00111111001111111111111111111111111100
-     00111111100111111111111111111111111100
-     00011111110011111111111111111111111000
-     00001111111001111111111111111111110000
-     00000111111111111111111111111111100000
-     00000111111111111111111111111111100000
-     00000011111111111111111111111111000000
-     00000000111111111111111111111100000000
-     00000000011111111111111111111000000000
-     00000000000111111111111111100000000000
-     00000000000000111111111100000000000000`;
-
     const fullStr = (str) => {
         let arr = str.toUpperCase().split('');
         let newStr = '';
@@ -115,7 +71,6 @@
         }
         return newStr.split(' ');
     }
-
     const funcWrite = (arr) => {
         let newArr = [];
         for (let i = 0; i < arr.length; i++) {
@@ -131,21 +86,16 @@
         }
         return newStr;
     }
-    const fullImg = (img) => {
-        return img.split('     ');
-    }
-
-    const funcBuildStr = (str) => {
+    const funcBuild = (str) => {
         const pixel = fullStr(str);
-        const flex = document.querySelectorAll('.flex-box')[0];
+        const flex = document.getElementById('flex-box');
         const fullNum = funcWrite(pixel);
         const pixeLength = pixel.length-1;
-        flex.style = `height: ${pixel[0].length*100/pixeLength}vw;`;
-
+        flex.style = `height: ${12*100/pixeLength}vw;`;
         for (let i = 0; i < fullNum.length; i++) {
             setTimeout(function () {
                 flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
-                let elementIdStyle = flex.querySelector('#div' + i);
+                let elementIdStyle = document.getElementById('div' + i);
                 elementIdStyle.style.animation = `pixel 5s ease-in-out forwards`;
                 elementIdStyle.style.width = `${100 / pixeLength}vw`;
                 elementIdStyle.style.height = `${100 / pixeLength}vw`;
@@ -155,34 +105,9 @@
                 }
             }, 10 * i);
         }
-        setTimeout(function() {
-            funcBuildImg(img);
-        }, pixeLength*150);
     }
-    const funcBuildImg = (img) => {
-        const pixel = fullImg(img);
-        const flex = document.querySelectorAll('.flex-box')[1];
-        const fullNum = funcWrite(pixel);
-        const pixeLength = pixel.length;
-        flex.style = `height: ${pixel[0].length*100/pixeLength}vw;`;
-
-        for (let i = 0; i < fullNum.length; i++) {
-            setTimeout(function () {
-                flex.insertAdjacentHTML('beforeEnd', `<div id="div${i}"></div>`);
-                let elementIdStyle = flex.querySelector('#div' + i);
-                elementIdStyle.style.animation = `pixel3 0.2s ease-in-out forwards`;
-                elementIdStyle.style.width = `${100 / pixeLength}vw`;
-                elementIdStyle.style.height = `${100 / pixeLength}vw`;
-                if (fullNum[i] === '1') {
-                    elementIdStyle.style.backgroundColor = 'red';
-                }
-            }, 10 * i);
-        }
-    }
-
     setTimeout(function() {
-        funcBuildStr(str);
-        
+        funcBuild(str);
     }, 1000);
 </script>
 
@@ -191,25 +116,19 @@
         margin: 0;
         background: #0a1428;
         display: flex;
+        align-items: center;
         height: 100vh;
         overflow: hidden;
-        flex-direction: column;
-        padding: 10vh 0;
-        align-items: flex-start;
     }
-
-    .flex-box {
+    #flex-box {
         display: flex;
         flex-wrap: wrap;
         flex-direction: column-reverse;
-        margin: 1vh 0;
     }
-
-    .flex-box div {
+    #flex-box div {
         box-sizing: border-box;
         border-radius: 50%;   
     }
-
     @keyframes pixel {
         0% {
             border: 1px solid white;
@@ -249,25 +168,6 @@
             border: 0px solid blue;
             transform: scale(1);
             background: red;
-        }
-    }
-    @keyframes pixel3 {
-        0% {
-            border: 1px solid green;
-            transform: scale(1);
-        }
-        25% {
-            transform: scale(0.5);
-        }
-        50% {
-            transform: scale(2);
-        }
-        75% {
-            transform: scale(0.5);
-        }
-        100% {
-            border: 0px solid blue;
-            transform: scale(1);
         }
     }
 </style>
