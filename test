@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <textarea style="width: 90%;" name="textarea" id="textarea" cols="30" rows="10"></textarea>
+    
+    <script>
+        const textarea = document.querySelector('#textarea');
+        window.onload = function () {
+            window.addEventListener("devicemotion", function(e) {
+                textarea.innerText = ' Position device:' + ' x: '+e.acceleration.x + ' y: '+e.acceleration.y + ' z: '+e.acceleration.z +
+                ' Position device:' + ' x: '+e.accelerationIncludingGravity.x + 'y: '+e.accelerationIncludingGravity.y + 'z: '+e.accelerationIncludingGravity.z +
+                ' Rate device:' + ' alpha: '+e.rotationRate.alpha + ' beta: '+e.rotationRate.beta + ' gamma: '+e.rotationRate.gamma +
+                ' Interval device:' + e.interval;
+            })
+            }
+    </script>
+</body>
+</html>
